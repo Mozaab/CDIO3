@@ -1,16 +1,37 @@
 abstract class Monopoly{
 
-    public String name;
+    public String Playername;
     public int saldo;
-    public String felt;
-    
+    public String feltname;
+    private static boolean Won = false;
 
-    public Monopoly(String name , int saldo , String felt ){
+    public Monopoly(String Playername , int saldo , String feltname ){
 
-        this.name = name;
+        this.Playername = Playername;
         this.saldo = saldo;
-        this.felt = felt;
+        this.feltname = feltname;
     }
+
+    public Integer getSaldo(){
+        return this.saldo;
+    }
+
+    public String getFelt(){
+        return feltname;
+    }
+
+    public String getDescription(){
+        return "Du er landet på feltet: " + this.feltname + " Din saldo er nu: " + this.saldo;
+    }
+
+    public void saldo(int money){
+
+    }
+
+    public boolean hasWon(){
+
+        return this.saldo == 40;
+    } 
 
     
 }
