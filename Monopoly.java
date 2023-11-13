@@ -1,27 +1,29 @@
 abstract class Monopoly{
 
-    public String Playername;
+    public String playerName;
+    public int DiceSum;
     public int saldo;
     public String feltname;
     private static boolean Won = false;
 
-    public Monopoly(String Playername , int saldo , String feltname ){
+    public Monopoly(String playerName , int DiceSum , int saldo , String feltname ){
 
-        this.Playername = Playername;
+        this.playerName = playerName;
+        this.DiceSum = DiceSum;
         this.saldo = saldo;
         this.feltname = feltname;
     }
 
-    public Integer getSaldo(){
+    public Integer getsaldo(){
         return this.saldo;
     }
 
     public String getFelt(){
-        return feltname;
+        return this.feltname;
     }
 
     public String getDescription(){
-        return "Du er landet på feltet: " + this.feltname + " Din saldo er nu: " + this.saldo;
+        return "Du har slået: " + this.DiceSum + " og er landet på feltet: " + this.feltname + " Din saldo er nu: " + this.saldo;
     }
 
     public void saldo(int money){
@@ -34,4 +36,16 @@ abstract class Monopoly{
     } 
 
     
+
+}
+
+
+class Player1 extends Monopoly{
+
+    public Player1(String playerName , int DiceSum , int saldo , String feltname){
+        super(playerName , DiceSum , saldo , feltname);
+    }
+
+
+
 }
