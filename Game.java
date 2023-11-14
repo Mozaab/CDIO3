@@ -1,6 +1,11 @@
 import java.util.Random;
 import java.util.Scanner;
- class Game {
+class Game {
+    
+    
+
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int antalSpillere;
@@ -12,7 +17,7 @@ import java.util.Scanner;
             if (antalSpillere >= 2 && antalSpillere <= 4) {
                 break;
             } else {
-                System.out.println("invalid number of players. Try again");
+                System.out.println("Invalid number of players. Try again");
             }
         }
 
@@ -22,11 +27,21 @@ import java.util.Scanner;
         for (int i = 0; i < antalSpillere; i++) {
             System.out.println("Enter the name of player " + (i + 1) + ": ");
             String playerName = scanner.nextLine();
-            spillere[i] = new Spiller(playerName, saldo, feltname);
+            spillere[i] = new Spiller(playerName, saldo , feltname);
         }
         scanner.close();
     }
-}
+
+    public static void Grund(int saldo , String[] feltname){
+        for (int i = 0; i < feltname.length ; i++){
+            if (feltname[i] == "  " ){ 
+                feltname[i] = " . ";
+                Spiller.saldo();
+            }
+        }
+    }
+
+
     public Integer Win = 40;
 
     public static String[] feltname = {"OB: Your fans hate you and they smash your car. Pay 1 to repair it!",
@@ -54,11 +69,20 @@ import java.util.Scanner;
         System.out.println("Velkommen til Monopoly");
 
 
-
-
-        public int dice(){
-
-        }
+        
 
     }
+
+    public Integer dice(){
+            
+        Random rand = new Random();
+
+        int die1 = rand.nextInt(6) + 1;
+
+        int total = die1;
+
+        return total;
+    }
+
+
 }

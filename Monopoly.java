@@ -1,7 +1,6 @@
  class Monopoly{
 
     public String playerName;
-    public int DiceSum;
     public int saldo;
     public String feltname;
     private static boolean Won = false;
@@ -9,12 +8,11 @@
     public Monopoly(String playerName, int saldo , String feltname ){
 
         this.playerName = playerName;
-        this.DiceSum = DiceSum;
         this.saldo = saldo;
         this.feltname = feltname;
     }
 
-    public Integer getsaldo(){
+    public Integer getSaldo(){
         return this.saldo;
     }
     public String getNavn() {
