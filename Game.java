@@ -22,14 +22,14 @@ import java.util.Scanner;
         for (int i = 0; i < antalSpillere; i++) {
             System.out.println("Enter the name of player " + (i + 1) + ": ");
             String playerName = scanner.nextLine();
-            spillere[i] = new Spiller(playerName);
+            spillere[i] = new Spiller(playerName, saldo, feltname);
         }
         scanner.close();
     }
 }
     public Integer Win = 40;
 
-    public String[] feltname = {"OB: Your fans hate you and they smash your car. Pay 1 to repair it!",
+    public static String[] feltname = {"OB: Your fans hate you and they smash your car. Pay 1 to repair it!",
                             "AGF: You ate too much McDonalds on your holiday, and you are not fit for the season. Pay 1 ",
                             "Olympique Lyon: You went to the Alps for skiing without permission. You get fined 1!", 
                             "Toulouse: You get fined for going out on a matchday. You get fined 1! " ,
