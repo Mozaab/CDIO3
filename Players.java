@@ -6,13 +6,13 @@ abstract class Spil {
         int antalSpillere;
 
         while (true) {
-            System.out.println("Indtast antallet af spillere (2-4): ");
+            System.out.println("Enter numbers of players (2-4): ");
             antalSpillere = scanner.nextInt();
 
             if (antalSpillere >= 2 && antalSpillere <= 4) {
                 break;
             } else {
-                System.out.println("Ugyldigt antal spillere. Prøv igen.");
+                System.out.println("invalid number of players. Try again");
             }
         }
 
@@ -20,7 +20,7 @@ abstract class Spil {
         scanner.nextLine();
 
         for (int i = 0; i < antalSpillere; i++) {
-            System.out.println("Indtast navnet på spiller " + (i + 1) + ": ");
+            System.out.println("Enter the name of player " + (i + 1) + ": ");
             String navn = scanner.nextLine();
             spillere[i] = new Spiller(navn);
         }
