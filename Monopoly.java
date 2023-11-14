@@ -4,7 +4,7 @@ abstract class Monopoly{
     public int DiceSum;
     public int saldo;
     public String feltname;
-    private static boolean Lost = false;
+    private static boolean Won = false;
 
     public Monopoly(String playerName , int DiceSum , int saldo , String feltname ){
 
@@ -17,7 +17,9 @@ abstract class Monopoly{
     public Integer getsaldo(){
         return this.saldo;
     }
-
+    public String getNavn() {
+        return playerName;
+    }
     public String getFelt(){
         return this.feltname;
     }
@@ -27,10 +29,10 @@ abstract class Monopoly{
     }
 
     public void saldo(int money){
-
+        this.saldo += money;
     }
 
-    public boolean hasLost(){
+    public boolean hasWon(){
 
         return this.saldo == 40;
     } 
