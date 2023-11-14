@@ -20,6 +20,8 @@ public class Game {
                             "Real Madrid: Bellingham requests bonuses for his goals. Pay 5! " };
 
 
+    
+
 
     public void Spil(){
 
@@ -28,9 +30,7 @@ public class Game {
 
 
 
-        public int Dice(){
-
-        }
+      
 
     }
 }
