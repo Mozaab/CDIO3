@@ -1,7 +1,32 @@
 import java.util.Random;
+import java.util.Scanner;
+ class Game {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int antalSpillere;
 
-public class Game {
+        while (true) {
+            System.out.println("Enter number of players (2-4): ");
+            antalSpillere = scanner.nextInt();
 
+            if (antalSpillere >= 2 && antalSpillere <= 4) {
+                break;
+            } else {
+                System.out.println("invalid number of players. Try again");
+            }
+        }
+
+        Spiller[] spillere = new Spiller[antalSpillere];
+        scanner.nextLine();
+
+        for (int i = 0; i < antalSpillere; i++) {
+            System.out.println("Enter the name of player " + (i + 1) + ": ");
+            String playerName = scanner.nextLine();
+            spillere[i] = new Spiller(playerName);
+        }
+        scanner.close();
+    }
+}
     public Integer Win = 40;
 
     public String[] feltname = {"OB: Your fans hate you and they smash your car. Pay 1 to repair it!",

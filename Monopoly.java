@@ -1,4 +1,4 @@
-abstract class Monopoly{
+ class Monopoly{
 
     public String playerName;
     public int DiceSum;
@@ -6,7 +6,7 @@ abstract class Monopoly{
     public String feltname;
     private static boolean Won = false;
 
-    public Monopoly(String playerName , int DiceSum , int saldo , String feltname ){
+    public Monopoly(String playerName, int saldo , String feltname ){
 
         this.playerName = playerName;
         this.DiceSum = DiceSum;
@@ -42,10 +42,10 @@ abstract class Monopoly{
 }
 
 
-class Player1 extends Monopoly{
+class Spiller extends Monopoly{
 
-    public Player1(String playerName , int DiceSum , int saldo , String feltname){
-        super(playerName , DiceSum , saldo , feltname);
+    public Spiller(String playerName, int saldo , String feltname){
+        super(playerName, saldo , feltname);
     }
 
 
