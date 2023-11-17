@@ -9,6 +9,9 @@ abstract class Square {
     public Square(String name) {
         this.name = name;
     }
+
+   
+
 }
 
 class Player extends Square {
@@ -20,16 +23,59 @@ class Player extends Square {
         this.money = money;
         this.position = 0; // Starting position
     }
+
+    public void addMoney(int amount){
+        money += amount;
+    }
+
+    public void subtractMoney(int cost) {
+        money -= cost;
+    }
+
+
+   
 }
+
 
 class GameBoard extends Square {
     int cost;
+    Player owner;
 
     public GameBoard(String name, int cost) {
         super(name);
         this.cost = cost;
+        this.owner = null;
     }
 
+    public void purchase(Player player) {
+        if (owner == null) {
+            Scanner scanner = new Scanner(System.in);
+            // Field is not owned, player can purchase
+            System.out.println("Cost to buy: $" + cost);
+            System.out.print("Do you want to buy? (y/n): ");
+            
+            
+
+
+            String input = scanner.next();
+            if (input.equalsIgnoreCase("y")) {
+                if (player.money >= cost) {
+                    player.subtractMoney(cost);
+                    owner = player; // Set the owner of the field
+                    System.out.println("Field purchased!");
+                } else {
+                    System.out.println("Not enough money to buy the field.");
+                }
+            }
+        } else {
+            // Field is already owned, player needs to pay rent
+            System.out.println("This field is owned by " + owner.name + ". Paying rent: $" + cost);
+            player.subtractMoney(cost);
+            owner.addMoney(cost);
+        } 
+    }
+
+    
    
 }
 
@@ -50,14 +96,14 @@ public abstract class MonopolyGame {
 
         
       
-        int antalSpillere;
+        int numOfPlayers;
 
         while (true) {
             try {
             System.out.println("Enter number of players (2-4): ");
-            antalSpillere = scanner.nextInt();
+            numOfPlayers = scanner.nextInt();
 
-            if (antalSpillere >= 2 && antalSpillere <= 4) {
+            if (numOfPlayers >= 2 && numOfPlayers <= 4) {
                 break;
             } else {
                 System.out.println("Invalid number of player! Try again! ");
@@ -68,10 +114,10 @@ public abstract class MonopolyGame {
             }
         }
 
-        Player[] Playere = new Player[antalSpillere];
+        Player[] Playere = new Player[numOfPlayers];
         scanner.nextLine();
 
-        for (int i = 0; i < antalSpillere; i++) {
+        for (int i = 0; i < numOfPlayers; i++) {
             System.out.println("Enter the name of the player " + (i + 1) + ": ");
             String navn = scanner.nextLine();
             Playere[i] = new Player(navn, 20);
@@ -79,6 +125,7 @@ public abstract class MonopolyGame {
 
         // Initialize GameBoards
         ArrayList<GameBoard> fields = new ArrayList<>();
+        fields.add(new GameBoard("Start", 0)); 
         fields.add(new GameBoard("Field 1", 4)); // Adjust costs as needed
         fields.add(new GameBoard("Field 2", 2));
         fields.add(new GameBoard("Field 3", 1));
@@ -94,7 +141,7 @@ public abstract class MonopolyGame {
         fields.add(new GameBoard("Field 13", 1));
 
         
-
+        // fields.get(0); Kan muligvis være den metode for at hente feltet start
        
         // Add more fields if desired
 
@@ -128,29 +175,13 @@ public abstract class MonopolyGame {
                 
                 player.position = (player.position + diceRoll) % fields.size();
 
+
                 // Process field
                 GameBoard currentField = fields.get(player.position);
                 System.out.println("Landed on: " + currentField.name);
+                currentField.purchase(player);
 
-                if (currentField.cost > 0) {
-                    // Field can be bought
-                    System.out.println("Cost to buy: $" + currentField.cost);
-                    System.out.print("Do you want to buy? (y/n): ");
-                    String input = scanner.next();
-                    if (input.equalsIgnoreCase("y")) {
-                        if (player.money >= currentField.cost) {
-                            player.money -= currentField.cost;
-                            System.out.println("Field purchased!");
-                        } else {
-                            System.out.println("Not enough money to buy the field.");
-                        }
-                    }
-                } else {
-                    // Field is a chance card
-                    // ChanceCard drawnCard = chanceCards.remove(0);
-                    // System.out.println("Chance card: " + drawnCard.description);
-                    // Implement logic for chance card actions
-                }
+                
 
                 // Check if the game should end
                 if (player.money <= 0 || player.money >= 50) {
