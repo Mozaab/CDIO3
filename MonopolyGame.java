@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 // import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -45,6 +46,30 @@ class GameBoard extends Square {
 // }
 
 public abstract class MonopolyGame {
+
+    public static char[] createBoard(ArrayList<GameBoard> fields){
+        char[] gameBoard = new char[fields.size()];
+        
+        for (int i = 0; i < fields.size() ; i++){
+            gameBoard[i] = '#';
+            System.out.println(gameBoard[i] + ' ');
+        }
+        return gameBoard;
+    }
+
+    public static boolean mover(char[] gameBoard){
+        for (int i = 0 ; i < gameBoard.length ; i++){
+            if (gameBoard[i] == 'X'){
+                    if (i < gameBoard.length - 1 && gameBoard[i + 1] == '#'){
+                        gameBoard[i + 1] = 'X';
+                        gameBoard[i] = '#';
+                        return true;
+                    } else return false;
+                
+            } 
+        }
+        return false;
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -93,8 +118,9 @@ public abstract class MonopolyGame {
         fields.add(new GameBoard("Field 12", 5));
         fields.add(new GameBoard("Field 13", 1));
 
-        
 
+        char[] gameBoard = createBoard(fields);
+        
        
         // Add more fields if desired
 
@@ -131,6 +157,10 @@ public abstract class MonopolyGame {
                 // Process field
                 GameBoard currentField = fields.get(player.position);
                 System.out.println("Landed on: " + currentField.name);
+                
+                System.out.println(Arrays.toString(gameBoard));
+                    
+                
 
                 if (currentField.cost > 0) {
                     // Field can be bought
@@ -145,22 +175,35 @@ public abstract class MonopolyGame {
                             System.out.println("Not enough money to buy the field.");
                         }
                     }
-                } else {
+                } //else 
+                    
+                    
+                if (mover(gameBoard)){
+                    System.out.println("Player moved to the next position");
+                } else System.out.println("Place occupied");
+
+                    
                     // Field is a chance card
                     // ChanceCard drawnCard = chanceCards.remove(0);
                     // System.out.println("Chance card: " + drawnCard.description);
                     // Implement logic for chance card actions
-                }
 
                 // Check if the game should end
                 if (player.money <= 0 || player.money >= 50) {
                     System.out.println(player.name + " has reached the end condition. Game over!");
                     System.exit(0);
                 }
+                
             }
+        
+
+
+
+        
         }
     }
 }
+           
 
 // class Spiller {
 //     private String navn;
