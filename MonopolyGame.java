@@ -54,16 +54,16 @@ public abstract class MonopolyGame {
 
         while (true) {
             try {
-            System.out.println("Indtast antallet af spillere (2-4): ");
+            System.out.println("Enter number of players (2-4): ");
             antalSpillere = scanner.nextInt();
 
             if (antalSpillere >= 2 && antalSpillere <= 4) {
                 break;
             } else {
-                System.out.println("Ugyldigt antal spillere. Prøv igen.");
+                System.out.println("Invalid number of player! Try again! ");
             } 
         }catch (InputMismatchException e) {
-            System.out.println("Ugyldigt input. Indtast venligst et heltal mellem 2-4");
+            System.out.println("Invalid input. Please enter an integer. Try again! ");
             scanner.nextLine();
             }
         }
@@ -72,7 +72,7 @@ public abstract class MonopolyGame {
         scanner.nextLine();
 
         for (int i = 0; i < antalSpillere; i++) {
-            System.out.println("Indtast navnet på spiller " + (i + 1) + ": ");
+            System.out.println("Enter the name of the player " + (i + 1) + ": ");
             String navn = scanner.nextLine();
             Playere[i] = new Player(navn, 20);
         }
@@ -110,7 +110,7 @@ public abstract class MonopolyGame {
         // Collections.shuffle(chanceCards);
 
         // Game loop
-        int turn = 0;
+        int turn = 1;
         while (true) {
             System.out.println("\nTurn " + turn++);
 
