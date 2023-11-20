@@ -182,7 +182,7 @@ public abstract class MonopolyGame {
 
         // Initialize GameBoards
         ArrayList<GameBoard> fields = new ArrayList<>();
-        fields.add(new GameBoard("Start", 2, false)); 
+        fields.add(new GameBoard("Start", 0, false)); 
         fields.add(new GameBoard("Odense football club", 1, false)); // Adjust costs as needed
         fields.add(new GameBoard("Aarhus football club", 1, false));
         fields.add(new GameBoard("Chance", 0, true));
