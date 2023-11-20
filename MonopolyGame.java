@@ -2,6 +2,7 @@ import java.util.ArrayList;
 // import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Arrays;
 
 abstract class Square {
     String name;
