@@ -55,7 +55,7 @@ class GameBoard extends Square {
             Scanner scanner = new Scanner(System.in);
             // Field is not owned, player can purchase
             System.out.println("Cost to buy: $" + cost);
-            System.out.print("Do you want to buy? (y/n): ");
+            System.out.print("Do you want to buy? Press y to purchase. If not, press anything else: ");
             
             
 
@@ -70,12 +70,16 @@ class GameBoard extends Square {
                     System.out.println("Not enough money to buy the field.");
                 }
             }
-        } else {
+        } else if (player == owner) {
             // Field is already owned, player needs to pay rent
+            System.out.println("This field is owned by yourself. You can not buy this field");
+            player.subtractMoney(cost);
+            owner.addMoney(cost);
+        } else {
             System.out.println("This field is owned by " + owner.name + ". Paying rent: $" + cost);
             player.subtractMoney(cost);
             owner.addMoney(cost);
-        } 
+        }
     } 
 }
 class ChanceCard {
@@ -233,7 +237,7 @@ public abstract class MonopolyGame {
 
                 for (int i = 0 ; i < numOfPlayers ; i++){
                     if (mover(gameBoard)){
-                        System.out.println("Player moved to the next position");
+                        
                     } else {
                         System.out.println("Place occupied");
                     }
