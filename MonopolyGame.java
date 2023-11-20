@@ -1,0 +1,309 @@
+import java.util.ArrayList;
+// import java.util.Collections;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+abstract class Square {
+    String name;
+
+    public Square(String name) {
+        this.name = name;
+    }
+
+   
+
+}
+
+class Player extends Square {
+    int money;
+    int position;
+
+    public Player(String name, int money) {
+        super(name);
+        this.money = money;
+        this.position = 0; // Starting position
+    }
+
+    public void addMoney(int amount){
+        money += amount;
+    }
+
+    public void subtractMoney(int cost) {
+        money -= cost;
+    }
+
+
+   
+}
+
+
+class GameBoard extends Square {
+    int cost;
+    Player owner;
+    boolean isChanceCard;
+
+    public GameBoard(String name, int cost, boolean isChanceCard) {
+        super(name);
+        this.cost = cost;
+        this.owner = null;
+        this.isChanceCard = isChanceCard;
+    }
+
+    public void purchase(Player player) {
+        if (owner == null) {
+            Scanner scanner = new Scanner(System.in);
+            // Field is not owned, player can purchase
+            System.out.println("Cost to buy: $" + cost);
+            System.out.print("Do you want to buy? (y/n): ");
+            
+            
+
+
+            String input = scanner.next();
+            if (input.equalsIgnoreCase("y")) {
+                if (player.money >= cost) {
+                    player.subtractMoney(cost);
+                    owner = player; // Set the owner of the field
+                    System.out.println("Field purchased!");
+                } else {
+                    System.out.println("Not enough money to buy the field.");
+                }
+            }
+        } else {
+            // Field is already owned, player needs to pay rent
+            System.out.println("This field is owned by " + owner.name + ". Paying rent: $" + cost);
+            player.subtractMoney(cost);
+            owner.addMoney(cost);
+        } 
+    } 
+}
+class ChanceCard {
+    String description;
+    int effectId;
+
+    public ChanceCard(String description, int effectId) {
+        this.description = description;
+        this.effectId = effectId;
+    }
+}
+public abstract class MonopolyGame {
+    static ArrayList<ChanceCard> chanceCards = new ArrayList<>();
+
+    public static char[] createBoard(ArrayList<GameBoard> fields ){
+        char[] gameBoard = new char[fields.size()];
+        
+        for (int i = 0; i < fields.size(); i++){
+            gameBoard[i] = ' ';
+            gameBoard[0] = 'X';
+            
+        }
+        return gameBoard;
+    }
+
+
+    public static boolean mover(char[] gameBoard){
+    
+
+        for (int i = 0 ; i < gameBoard.length ; i++){
+            
+            if (gameBoard[i] == 'X'){
+                if (i < gameBoard.length - 1 && gameBoard[i + 1]  == ' '){
+                    gameBoard[i + 1] = 'X';
+                    gameBoard[i] = ' ';
+                    return true;
+                } else if ( i == gameBoard.length - 1){
+                    gameBoard[0] = 'X';
+                    gameBoard[i] = ' ';
+                    return true;
+                }
+            }
+            
+        }
+        return false;
+    
+    }
+
+
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        
+      
+        int numOfPlayers;
+
+        while (true) {
+            try {
+            System.out.println("Enter number of players (2-4): ");
+            numOfPlayers = scanner.nextInt();
+
+            if (numOfPlayers >= 2 && numOfPlayers <= 4) {
+                break;
+            } else {
+                System.out.println("Invalid number of player! Try again! ");
+            } 
+        }catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter an integer. Try again! ");
+            scanner.nextLine();
+            }
+        }
+
+        Player[] Playere = new Player[numOfPlayers];
+        scanner.nextLine();
+
+        for (int i = 0; i < numOfPlayers; i++) {
+            System.out.println("Enter the name of the player " + (i + 1) + ": ");
+            String navn = scanner.nextLine();
+            Playere[i] = new Player(navn, 20);
+        }
+
+        // Initialize GameBoards
+        ArrayList<GameBoard> fields = new ArrayList<>();
+        fields.add(new GameBoard("Start", 0, false)); 
+        fields.add(new GameBoard("Field 1", 4, false)); // Adjust costs as needed
+        fields.add(new GameBoard("Field 2", 2, false));
+        fields.add(new GameBoard("Field 3(Chance)", 0, true));
+        fields.add(new GameBoard("Field 4", 3, false));
+        fields.add(new GameBoard("Field 5", 3, false));
+        fields.add(new GameBoard("Field 6", 2, false));
+        fields.add(new GameBoard("Field 7", 5, false));
+        fields.add(new GameBoard("Field 8 (Chance)", 0, true));
+        fields.add(new GameBoard("Field 9", 3, false));
+        fields.add(new GameBoard("Field 10", 3, false));
+        fields.add(new GameBoard("Field 11", 2, false));
+        fields.add(new GameBoard("Field 12", 5, false));
+        fields.add(new GameBoard("Field 13 (Chance)", 0, true));
+
+        ArrayList<ChanceCard> chanceCards = new ArrayList<>();
+        chanceCards.add(new ChanceCard("Advance to the start and earn your money: DKK 2", 1));
+        chanceCards.add(new ChanceCard("Advance 5 spaces!", 2));
+        chanceCards.add(new ChanceCard("You are late for training pay 2 to the manager", 3));
+        chanceCards.add(new ChanceCard("You score a hat trick and everyone gives you 1 money", 4));
+        chanceCards.add(new ChanceCard("You get a reward for coming to all the trainings and receive 2 money", 5));
+        chanceCards.add(new ChanceCard("Advance to field X", 6)); // move to specific place on the board (dont know where yet)
+        chanceCards.add(new ChanceCard("Advance to field X", 7)); // move to specific place on the board (dont know where yet)
+        chanceCards.add(new ChanceCard("Your fans hate you and smash your car. You must pay 1 money to repair it", 8));
+        chanceCards.add(new ChanceCard("You renovate a grandstand at your stadium and must pay 2", 9));
+        chanceCards.add(new ChanceCard("Your clubhouse is assessed at a higher value than before. Pay 1 in property tax", 10));
+        chanceCards.add(new ChanceCard("An oil sheik from Saudi Arabia will sponsor your team. Receive 3", 11));
+        chanceCards.add(new ChanceCard("You go on a skiing holiday, even though you are not allowed according to your contract, and get injured. Pay 1 to the manager", 12));
+        chanceCards.add(new ChanceCard("You eat too much McDonald's during the summer holidays and are not ready to fight. Pay 1 to the manager", 13));
+        chanceCards.add(new ChanceCard("You have played well in the youth team and will make your debut in the first team. Receive 2", 14));
+        chanceCards.add(new ChanceCard("Both your parents are kidnapped by terrorists. Pay 2 in ransom.", 15));
+
+        char[] gameBoard = createBoard(fields);
+
+        int turn = 1;
+        while (true) {
+            System.out.println("\nTurn " + turn++);
+
+            for (Player player : Playere) {
+                System.out.println("\n" + player.name + "'s turn");
+                System.out.println("Current position: " + player.position);
+                System.out.println("Money: $" + player.money);
+
+                // Simulate dice roll
+                int diceRoll = (int) (Math.random() * 6) + 1;
+                System.out.println("Dice roll: " + diceRoll);
+
+                // Move player
+                
+                
+                player.position = (player.position + diceRoll) % fields.size();
+
+
+                // Process field
+                GameBoard currentField = fields.get(player.position);
+                System.out.println("Landed on: " + currentField.name);
+
+                if (currentField.isChanceCard) {
+                    int CardIndex = (int) (Math.random() * chanceCards.size());
+                    ChanceCard drawnCard = chanceCards.get(CardIndex);
+                    System.out.println("Chance card: " + drawnCard.description);
+                    applyChanceCardEffect(drawnCard, player, Playere, fields);
+                } else {
+                currentField.purchase(player);
+                }
+                
+
+                for (int i = 0 ; i < numOfPlayers ; i++){
+                    if (mover(gameBoard)){
+                        System.out.println("Player moved to the next position");
+                    } else {
+                        System.out.println("Place occupied");
+                    }
+                }
+
+                // Check if the game should end
+                if (player.money <= 0 || player.money >= 50) {
+                    System.out.println(player.name + " has reached the end condition. Game over!");
+                    System.exit(0);
+                }
+            }
+        }
+        }
+    
+            public static void applyChanceCardEffect(ChanceCard card, Player currentPlayer, Player[] allPlayers, ArrayList<GameBoard> fields) {
+                switch (card.effectId) {
+                    case 1:
+                        currentPlayer.position = 0;
+                        currentPlayer.addMoney(2);
+                        break;
+                        case 2:
+                        currentPlayer.position = (currentPlayer.position + 5) % fields.size(); // Advance 5 spaces
+                        break;
+                    case 3:
+                        currentPlayer.subtractMoney(2); // Pay 2 to the manager
+                        break;
+                    case 4:
+                        for (Player player : allPlayers) {
+                            if (player != currentPlayer) {
+                                player.subtractMoney(1); // Each player gives 1 money
+                                currentPlayer.addMoney(1); // Current player receives the money
+                            }
+                        }
+                        break;
+                    case 5:
+                        currentPlayer.addMoney(2); // Receive 2 money for training
+                        break;
+                    case 6:
+                        currentPlayer.position = 10; // move to specific place on the board (dont know where yet)
+                        
+                        break;
+                    case 7:
+                        currentPlayer.position =15; // move to specific place on the board (dont know where yet)
+                        break;
+                    case 8:
+                        currentPlayer.subtractMoney(1); // Pay 1 money for car repair
+                        break;
+                    case 9:
+                        currentPlayer.subtractMoney(2); // Pay 2 for renovating a grandstand
+                        break;
+                    case 10:
+                        currentPlayer.subtractMoney(1); // Pay 1 in property tax
+                        break;
+                    case 11:
+                        currentPlayer.addMoney(3); // Receive 3 from an oil sheik sponsor
+                        break;
+                    case 12:
+                        currentPlayer.subtractMoney(1); // Pay 1 for ski holiday injury
+                        break;
+                    case 13:
+                        currentPlayer.subtractMoney(1); // Pay 1 for eating too much McDonald's
+                        break;
+                    case 14:
+                        currentPlayer.addMoney(2); // Receive 2 for playing well in the youth team
+                        break;
+                    case 15:
+                        currentPlayer.subtractMoney(2); // Pay 2 ransom for kidnapped parents
+                        break;
+        }
+    }
+    
+}
+
+
+
+
+
