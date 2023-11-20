@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 // import java.util.Collections;
@@ -47,29 +52,46 @@ class GameBoard extends Square {
 
 public abstract class MonopolyGame {
 
-    public static char[] createBoard(ArrayList<GameBoard> fields){
-        char[] gameBoard = new char[fields.size()];
+    public static char[][] createBoard(ArrayList<GameBoard> fields , int numPlayers){
+        char[][] gameBoard = new char[numPlayers][fields.size()];
         
-        for (int i = 0; i < fields.size() ; i++){
-            gameBoard[i] = '#';
-            System.out.println(gameBoard[i] + ' ');
+        for (int i = 0; i < numPlayers; i++){
+            Arrays.fill(gameBoard[i], '#');
+            
         }
+
+        for (int i = 0 ; i < numPlayers ; i++){
+            gameBoard[i][0] = 'X';
+        }
+        
         return gameBoard;
     }
 
-    public static boolean mover(char[] gameBoard){
-        for (int i = 0 ; i < gameBoard.length ; i++){
-            if (gameBoard[i] == 'X'){
-                    if (i < gameBoard.length - 1 && gameBoard[i + 1] == '#'){
-                        gameBoard[i + 1] = 'X';
-                        gameBoard[i] = '#';
-                        return true;
-                    } else return false;
-                
-            } 
-        }
-        return false;
+    public static boolean mover(char[][] gameBoard , int playerPo , int diceRoll){
+        int currentPosition = getPlayerPo(gameBoard , playerPo);
+        int newPosition = (currentPosition + diceRoll) % gameBoard[playerPo].length;
+
+        if (gameBoard[playerPo][newPosition] == '#'){
+            gameBoard[playerPo][newPosition] = 'X';
+            gameBoard[playerPo][currentPosition] = '#';
+            return true;
+        } else return false;
+
+        
+    
     }
+
+    public static int getPlayerPo(char[][] gameBoard , int playerPo){
+        for (int i = 0 ; i < gameBoard[playerPo].length ; i++ ){
+            if (gameBoard[playerPo][i] == 'X'){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -119,7 +141,10 @@ public abstract class MonopolyGame {
         fields.add(new GameBoard("Field 13", 1));
 
 
-        char[] gameBoard = createBoard(fields);
+        char[][] gameBoard = createBoard(fields, antalSpillere);
+        
+        
+
         
        
         // Add more fields if desired
@@ -176,11 +201,18 @@ public abstract class MonopolyGame {
                         }
                     }
                 } //else 
-                    
-                    
-                if (mover(gameBoard)){
-                    System.out.println("Player moved to the next position");
-                } else System.out.println("Place occupied");
+                
+               
+                for (int i = 0 ; i < antalSpillere ; i++){
+                    if (mover(gameBoard, i, diceRoll)){
+                        System.out.println("Player moved to the next position");
+                    } else {
+                        System.out.println("Place occupied");
+                    }
+                }
+
+
+                
 
                     
                     // Field is a chance card
@@ -196,9 +228,6 @@ public abstract class MonopolyGame {
                 
             }
         
-
-
-
         
         }
     }
