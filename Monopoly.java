@@ -1,12 +1,12 @@
-abstract class Monopoly{
+ class Monopoly{
 
     public String playerName;
     public int DiceSum;
     public int saldo;
     public String feltname;
-    private static boolean Lost = false;
+    private static boolean Won = false;
 
-    public Monopoly(String playerName , int DiceSum , int saldo , String feltname ){
+    public Monopoly(String playerName, int saldo , String feltname ){
 
         this.playerName = playerName;
         this.DiceSum = DiceSum;
@@ -17,7 +17,9 @@ abstract class Monopoly{
     public Integer getsaldo(){
         return this.saldo;
     }
-
+    public String getNavn() {
+        return playerName;
+    }
     public String getFelt(){
         return this.feltname;
     }
@@ -27,10 +29,10 @@ abstract class Monopoly{
     }
 
     public void saldo(int money){
-
+        this.saldo += money;
     }
 
-    public boolean hasLost(){
+    public boolean hasWon(){
 
         return this.saldo == 40;
     } 
@@ -40,10 +42,10 @@ abstract class Monopoly{
 }
 
 
-class Player1 extends Monopoly{
+class Spiller extends Monopoly{
 
-    public Player1(String playerName , int DiceSum , int saldo , String feltname){
-        super(playerName , DiceSum , saldo , feltname);
+    public Spiller(String playerName, int saldo , String feltname){
+        super(playerName, saldo , feltname);
     }
 
 
