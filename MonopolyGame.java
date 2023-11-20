@@ -42,15 +42,21 @@ class GameBoard extends Square {
     int cost;
     Player owner;
     boolean isChanceCard;
+    boolean isPurchasable;
 
-    public GameBoard(String name, int cost, boolean isChanceCard) {
+    public GameBoard(String name, int cost, boolean isChanceCard, boolean isPurchasable) {
         super(name);
         this.cost = cost;
         this.owner = null;
         this.isChanceCard = isChanceCard;
+        this.isPurchasable = isPurchasable;
     }
 
     public void purchase(Player player) {
+                if (!isPurchasable) {
+            System.out.println("You decide to take a derserved vacation :)");
+            return;
+        }
         if (owner == null) {
             Scanner scanner = new Scanner(System.in);
             // Field is not owned, player can purchase
@@ -87,6 +93,8 @@ class GameBoard extends Square {
         
     } 
 }
+
+
 class ChanceCard {
     String description;
     int effectId;
@@ -139,7 +147,7 @@ public abstract class MonopolyGame {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        
+
       
         int numOfPlayers;
 
@@ -168,32 +176,42 @@ public abstract class MonopolyGame {
             Playere[i] = new Player(navn, 20);
         }
 
+        scanner.nextLine();
+        System.out.println("Welcome to Monopoly Jr. We will make a quick introduction on how the game works, and how you play it. ");
+        System.out.println("There are 24 fields in the gameboard and 4 of them are chancecards. There are 15 different chancecards which will randomly be chosen. It can either be a good thing or a bad thing :) ");
+        System.out.println("When its your turn, you roll with the dice and land on the field that the value of your diceroll is. You get a description on how much the field cost and if you want to buy the field you simply press 'y' and if you don't want to buy the field you press any other character on your keyboard. ");
+        System.out.println("It is not possible to sell a field you bought. So choose carefully what field you want to buy :) ");
+        System.out.println("If you have bought a field then if any other player accidently land on that field, they have to pay the same amount you bought the field for as a rent.");
+        System.out.println("The game ends when one of you don't have any more money.");
+        System.out.println("Enjoy the game! :)");
+        scanner.nextLine();
+
         // Initialize GameBoards
         ArrayList<GameBoard> fields = new ArrayList<>();
-        fields.add(new GameBoard("Start", 2, false)); 
-        fields.add(new GameBoard("Odense football club", 1, false)); // Adjust costs as needed
-        fields.add(new GameBoard("Aarhus football club", 1, false));
-        fields.add(new GameBoard("Chance", 0, true));
-        fields.add(new GameBoard("Toulouse", 1, false));
-        fields.add(new GameBoard("Lyon", 1, false));
-        fields.add(new GameBoard("Summer vacation: ", 0, false)); //hjørnekort????
-        fields.add(new GameBoard("Wolfsburg", 2, false));
-        fields.add(new GameBoard("Frankfurt", 2, false));
-        fields.add(new GameBoard("Chance", 0, true));
-        fields.add(new GameBoard("Brøndby", 2, false));
-        fields.add(new GameBoard("Football club Copenhagen", 2, false));
-        fields.add(new GameBoard("Christmas vacation", 0, false)); //Hjørnekort????
-        fields.add(new GameBoard("Manchester United", 3, false));
-        fields.add(new GameBoard("Chealsea", 3, false));
-        fields.add(new GameBoard("Chance", 0, true));
-        fields.add(new GameBoard("AC Milan", 3, false));
-        fields.add(new GameBoard("Juventus", 3, false));
-        fields.add(new GameBoard("Winter vacation", 0, false)); //Hjørnekort????
-        fields.add(new GameBoard("Tottenham", 4, false));
-        fields.add(new GameBoard("Arsenal", 4, false));
-        fields.add(new GameBoard("Chance", 0, true));
-        fields.add(new GameBoard("Bayern Munchen", 5, false));
-        fields.add(new GameBoard("Real Madrid", 5, false));
+        fields.add(new GameBoard("Start", 0, false, false)); 
+        fields.add(new GameBoard("Odense football club", 1, false, true)); // Adjust costs as needed
+        fields.add(new GameBoard("Aarhus football club", 1, false, true));
+        fields.add(new GameBoard("Chance", 0, true, false));
+        fields.add(new GameBoard("Toulouse", 1, false, true));
+        fields.add(new GameBoard("Lyon", 1, false, true));
+        fields.add(new GameBoard("Summer vacation: ", 0, false, false)); //hjørnekort????
+        fields.add(new GameBoard("Wolfsburg", 2, false, true));
+        fields.add(new GameBoard("Frankfurt", 2, false, true));
+        fields.add(new GameBoard("Chance", 0, true, false));
+        fields.add(new GameBoard("Brøndby", 2, false, true));
+        fields.add(new GameBoard("Football club Copenhagen", 2, false, true));
+        fields.add(new GameBoard("Christmas vacation", 0, false, false)); //Hjørnekort????
+        fields.add(new GameBoard("Manchester United", 3, false, true));
+        fields.add(new GameBoard("Chealsea", 3, false, true));
+        fields.add(new GameBoard("Chance", 0, true, false));
+        fields.add(new GameBoard("AC Milan", 3, false, true));
+        fields.add(new GameBoard("Juventus", 3, false, true));
+        fields.add(new GameBoard("Winter vacation", 0, false, false)); //Hjørnekort????
+        fields.add(new GameBoard("Tottenham", 4, false, true));
+        fields.add(new GameBoard("Arsenal", 4, false, true));
+        fields.add(new GameBoard("Chance", 0, true, false));
+        fields.add(new GameBoard("Bayern Munchen", 5, false, true));
+        fields.add(new GameBoard("Real Madrid", 5, false, true));
 
     
 
@@ -222,6 +240,7 @@ public abstract class MonopolyGame {
 
             for (Player player : Playere) {
                 System.out.println("\n" + player.name + "'s turn");
+                scanner.nextLine();
                 System.out.println("Current position: " + player.position);
                 System.out.println("Money: $" + player.money);
 
@@ -230,8 +249,6 @@ public abstract class MonopolyGame {
                 System.out.println("Dice roll: " + diceRoll);
 
                 // Move player
-                
-                
                 player.position = (player.position + diceRoll) % fields.size();
 
 
@@ -254,7 +271,8 @@ public abstract class MonopolyGame {
 
                 for (int i = 0 ; i < numOfPlayers ; i++){
                     if (mover(gameBoard)){
-                        
+                        // Det kan være det er her vi kan skrive noget kode som bevæger X'et ud fra player position?
+                        // Hvis man fjerner det her snippet så rykker X'et ikke
                     } else {
                         System.out.println("Place occupied");
                     }
@@ -268,6 +286,7 @@ public abstract class MonopolyGame {
             }
         }
         }
+
     
             public static void applyChanceCardEffect(ChanceCard card, Player currentPlayer, Player[] allPlayers, ArrayList<GameBoard> fields) {
                 switch (card.effectId) {
