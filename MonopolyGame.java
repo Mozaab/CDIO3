@@ -82,6 +82,8 @@ class GameBoard extends Square {
         }
     } 
 }
+
+
 class ChanceCard {
     String description;
     int effectId;
@@ -163,6 +165,16 @@ public abstract class MonopolyGame {
             Playere[i] = new Player(navn, 20);
         }
 
+        scanner.nextLine();
+        System.out.println("Welcome to Monopoly Jr. We will make a quick introduction on how the game works, and how you play it. ");
+        System.out.println("There are 24 fields in the gameboard and 4 of them are chancecards. There are 15 different chancecards which will randomly be chosen. It can either be a good thing or a bad thing :) ");
+        System.out.println("When its your turn, you roll with the dice and land on the field that the value of your diceroll is. You get a description on how much the field cost and if you want to buy the field you simply press 'y' and if you don't want to buy the field you press any other character on your keyboard. ");
+        System.out.println("It is not possible to sell a field you bought. So choose carefully what field you want to buy :) ");
+        System.out.println("If you have bought a field then if any other player accidently land on that field, they have to pay the same amount you bought the field for as a rent.");
+        System.out.println("The game ends when one of you don't have any more money.");
+        System.out.println("Enjoy the game! :)");
+        scanner.nextLine();
+
         // Initialize GameBoards
         ArrayList<GameBoard> fields = new ArrayList<>();
         fields.add(new GameBoard("Start", 0, false)); 
@@ -205,6 +217,7 @@ public abstract class MonopolyGame {
 
             for (Player player : Playere) {
                 System.out.println("\n" + player.name + "'s turn");
+                scanner.nextLine();
                 System.out.println("Current position: " + player.position);
                 System.out.println("Money: $" + player.money);
 
@@ -212,9 +225,7 @@ public abstract class MonopolyGame {
                 int diceRoll = (int) (Math.random() * 6) + 1;
                 System.out.println("Dice roll: " + diceRoll);
 
-                // Move player
-                
-                
+                // Move player 
                 player.position = (player.position + diceRoll) % fields.size();
 
 
@@ -237,7 +248,8 @@ public abstract class MonopolyGame {
 
                 for (int i = 0 ; i < numOfPlayers ; i++){
                     if (mover(gameBoard)){
-                        
+                        // Det kan være det er her vi kan skrive noget kode som bevæger X'et ud fra player position?
+                        // Hvis man fjerner det her snippet så rykker X'et ikke
                     } else {
                         System.out.println("Place occupied");
                     }
@@ -249,8 +261,9 @@ public abstract class MonopolyGame {
                     System.exit(0);
                 }
             }
+        } 
         }
-        }
+        
     
             public static void applyChanceCardEffect(ChanceCard card, Player currentPlayer, Player[] allPlayers, ArrayList<GameBoard> fields) {
                 switch (card.effectId) {
