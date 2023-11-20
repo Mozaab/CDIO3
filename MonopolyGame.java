@@ -56,7 +56,8 @@ public abstract class MonopolyGame {
         char[] gameBoard = new char[fields.size()];
         
         for (int i = 0; i < fields.size(); i++){
-            gameBoard[i] = '#';
+            gameBoard[i] = ' ';
+            gameBoard[0] = 'X';
             
         }
         return gameBoard;
@@ -67,14 +68,19 @@ public abstract class MonopolyGame {
     
 
         for (int i = 0 ; i < gameBoard.length ; i++){
-            if (gameBoard[i] == 'X'){
-                if (gameBoard[i + 1]  == '#'){
-                    gameBoard[i + 1] = 'X';
-                    gameBoard[i] = '#';
-                    return true;
+            for (Player player : Playere){
+                if (gameBoard[i] == 'X'){
+                    if (i < gameBoard.length - 1 && gameBoard[i + 1]  == ' '){
+                        gameBoard[i + 1] = 'X';
+                        gameBoard[i] = ' ';
+                        return true;
+                    } else if ( i == gameBoard.length - 1){
+                        gameBoard[0] = 'X';
+                        gameBoard[i] = ' ';
+                        return true;
+                    }
                 }
             }
-            
         }
         return false;
     
