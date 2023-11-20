@@ -217,6 +217,9 @@ public abstract class MonopolyGame {
                 GameBoard currentField = fields.get(player.position);
                 System.out.println("Landed on: " + currentField.name);
 
+                System.out.println(Arrays.toString(gameBoard));
+
+
                 if (currentField.isChanceCard) {
                     int CardIndex = (int) (Math.random() * chanceCards.size());
                     ChanceCard drawnCard = chanceCards.get(CardIndex);
