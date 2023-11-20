@@ -75,11 +75,16 @@ class GameBoard extends Square {
             System.out.println("This field is owned by yourself. You can not buy this field");
             player.subtractMoney(cost);
             owner.addMoney(cost);
-        } else {
+        } 
+        
+    
+        
+        else {
             System.out.println("This field is owned by " + owner.name + ". Paying rent: $" + cost);
             player.subtractMoney(cost);
             owner.addMoney(cost);
         }
+        
     } 
 }
 
@@ -136,7 +141,7 @@ public abstract class MonopolyGame {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        
+
       
         int numOfPlayers;
 
@@ -177,20 +182,32 @@ public abstract class MonopolyGame {
 
         // Initialize GameBoards
         ArrayList<GameBoard> fields = new ArrayList<>();
-        fields.add(new GameBoard("Start", 0, false)); 
-        fields.add(new GameBoard("Field 1", 4, false)); // Adjust costs as needed
-        fields.add(new GameBoard("Field 2", 2, false));
-        fields.add(new GameBoard("Field 3(Chance)", 0, true));
-        fields.add(new GameBoard("Field 4", 3, false));
-        fields.add(new GameBoard("Field 5", 3, false));
-        fields.add(new GameBoard("Field 6", 2, false));
-        fields.add(new GameBoard("Field 7", 5, false));
-        fields.add(new GameBoard("Field 8 (Chance)", 0, true));
-        fields.add(new GameBoard("Field 9", 3, false));
-        fields.add(new GameBoard("Field 10", 3, false));
-        fields.add(new GameBoard("Field 11", 2, false));
-        fields.add(new GameBoard("Field 12", 5, false));
-        fields.add(new GameBoard("Field 13 (Chance)", 0, true));
+        fields.add(new GameBoard("Start", 2, false)); 
+        fields.add(new GameBoard("Odense football club", 1, false)); // Adjust costs as needed
+        fields.add(new GameBoard("Aarhus football club", 1, false));
+        fields.add(new GameBoard("Chance", 0, true));
+        fields.add(new GameBoard("Toulouse", 1, false));
+        fields.add(new GameBoard("Lyon", 1, false));
+        fields.add(new GameBoard("Summer vacation: ", 0, false)); //hjørnekort????
+        fields.add(new GameBoard("Wolfsburg", 2, false));
+        fields.add(new GameBoard("Frankfurt", 2, false));
+        fields.add(new GameBoard("Chance", 0, true));
+        fields.add(new GameBoard("Brøndby", 2, false));
+        fields.add(new GameBoard("Football club Copenhagen", 2, false));
+        fields.add(new GameBoard("Christmas vacation", 0, false)); //Hjørnekort????
+        fields.add(new GameBoard("Manchester United", 3, false));
+        fields.add(new GameBoard("Chealsea", 3, false));
+        fields.add(new GameBoard("Chance", 0, true));
+        fields.add(new GameBoard("AC Milan", 3, false));
+        fields.add(new GameBoard("Juventus", 3, false));
+        fields.add(new GameBoard("Winter vacation", 0, false)); //Hjørnekort????
+        fields.add(new GameBoard("Tottenham", 4, false));
+        fields.add(new GameBoard("Arsenal", 4, false));
+        fields.add(new GameBoard("Chance", 0, true));
+        fields.add(new GameBoard("Bayern Munchen", 5, false));
+        fields.add(new GameBoard("Real Madrid", 5, false));
+
+    
 
         ArrayList<ChanceCard> chanceCards = new ArrayList<>();
         chanceCards.add(new ChanceCard("Advance to the start and earn your money: DKK 2", 1));
@@ -198,8 +215,8 @@ public abstract class MonopolyGame {
         chanceCards.add(new ChanceCard("You are late for training pay 2 to the manager", 3));
         chanceCards.add(new ChanceCard("You score a hat trick and everyone gives you 1 money", 4));
         chanceCards.add(new ChanceCard("You get a reward for coming to all the trainings and receive 2 money", 5));
-        chanceCards.add(new ChanceCard("Advance to field X", 6)); // move to specific place on the board (dont know where yet)
-        chanceCards.add(new ChanceCard("Advance to field X", 7)); // move to specific place on the board (dont know where yet)
+        chanceCards.add(new ChanceCard("Advance to Frankfurt", 6)); // move to specific place on the board (dont know where yet)
+        chanceCards.add(new ChanceCard("Advance to Chealsea", 7)); // move to specific place on the board (dont know where yet)
         chanceCards.add(new ChanceCard("Your fans hate you and smash your car. You must pay 1 money to repair it", 8));
         chanceCards.add(new ChanceCard("You renovate a grandstand at your stadium and must pay 2", 9));
         chanceCards.add(new ChanceCard("Your clubhouse is assessed at a higher value than before. Pay 1 in property tax", 10));
@@ -225,7 +242,7 @@ public abstract class MonopolyGame {
                 int diceRoll = (int) (Math.random() * 6) + 1;
                 System.out.println("Dice roll: " + diceRoll);
 
-                // Move player 
+                // Move player
                 player.position = (player.position + diceRoll) % fields.size();
 
 
@@ -261,9 +278,9 @@ public abstract class MonopolyGame {
                     System.exit(0);
                 }
             }
-        } 
         }
-        
+        }
+
     
             public static void applyChanceCardEffect(ChanceCard card, Player currentPlayer, Player[] allPlayers, ArrayList<GameBoard> fields) {
                 switch (card.effectId) {
@@ -289,7 +306,7 @@ public abstract class MonopolyGame {
                         currentPlayer.addMoney(2); // Receive 2 money for training
                         break;
                     case 6:
-                        currentPlayer.position = 10; // move to specific place on the board (dont know where yet)
+                        currentPlayer.position = 9; // move to specific place on the board (dont know where yet)
                         
                         break;
                     case 7:
