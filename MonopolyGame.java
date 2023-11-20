@@ -52,32 +52,31 @@ class GameBoard extends Square {
 
 public abstract class MonopolyGame {
 
-    public static char[][] createBoard(ArrayList<GameBoard> fields , int numPlayers){
-        char[][] gameBoard = new char[numPlayers][fields.size()];
+    public static char[] createBoard(ArrayList<GameBoard> fields ){
+        char[] gameBoard = new char[fields.size()];
         
-        for (int i = 0; i < numPlayers; i++){
-            Arrays.fill(gameBoard[i], '#');
+        for (int i = 0; i < fields.size(); i++){
+            gameBoard[i] = '#';
             
         }
-
-        for (int i = 0 ; i < numPlayers ; i++){
-            gameBoard[i][0] = 'X';
-        }
-        
         return gameBoard;
     }
 
-    public static boolean mover(char[][] gameBoard , int playerPo , int diceRoll){
-        int currentPosition = getPlayerPo(gameBoard , playerPo);
-        int newPosition = (currentPosition + diceRoll) % gameBoard[playerPo].length;
 
-        if (gameBoard[playerPo][newPosition] == '#'){
-            gameBoard[playerPo][newPosition] = 'X';
-            gameBoard[playerPo][currentPosition] = '#';
-            return true;
-        } else return false;
+    public static boolean mover(char[] gameBoard){
+    
 
-        
+        for (int i = 0 ; i < gameBoard.length ; i++){
+            if (gameBoard[i] == 'X'){
+                if (gameBoard[i + 1]  == '#'){
+                    gameBoard[i + 1] = 'X';
+                    gameBoard[i] = '#';
+                    return true;
+                }
+            }
+            
+        }
+        return false;
     
     }
 
@@ -141,7 +140,7 @@ public abstract class MonopolyGame {
         fields.add(new GameBoard("Field 13", 1));
 
 
-        char[][] gameBoard = createBoard(fields, antalSpillere);
+        char[] gameBoard = createBoard(fields);
         
         
 
@@ -204,7 +203,7 @@ public abstract class MonopolyGame {
                 
                
                 for (int i = 0 ; i < antalSpillere ; i++){
-                    if (mover(gameBoard, i, diceRoll)){
+                    if (mover(gameBoard)){
                         System.out.println("Player moved to the next position");
                     } else {
                         System.out.println("Place occupied");
