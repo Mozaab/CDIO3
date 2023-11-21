@@ -1,8 +1,7 @@
 import java.util.ArrayList;
-// import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Arrays;
+
 
 abstract class Square {
     String name;
@@ -105,45 +104,6 @@ class ChanceCard {
     }
 }
 public abstract class MonopolyGame {
-    static ArrayList<ChanceCard> chanceCards = new ArrayList<>();
-
-    public static char[] createBoard(ArrayList<GameBoard> fields ){
-        char[] gameBoard = new char[fields.size()];
-        
-        for (int i = 0; i < fields.size(); i++){
-            gameBoard[i] = ' ';
-            gameBoard[0] = 'X';
-            
-        }
-        return gameBoard;
-    }
-
-
-    public static boolean mover(char[] gameBoard){
-    
-
-        for (int i = 0 ; i < gameBoard.length ; i++){
-            
-            if (gameBoard[i] == 'X'){
-                if (i < gameBoard.length - 1 && gameBoard[i + 1]  == ' '){
-                    gameBoard[i + 1] = 'X';
-                    gameBoard[i] = ' ';
-                    return true;
-                } else if ( i == gameBoard.length - 1){
-                    gameBoard[0] = 'X';
-                    gameBoard[i] = ' ';
-                    return true;
-                }
-            }
-            
-        }
-        return false;
-    
-    }
-
-
-
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -198,7 +158,7 @@ public abstract class MonopolyGame {
         fields.add(new GameBoard("Wolfsburg", 2, false, true));
         fields.add(new GameBoard("Frankfurt", 2, false, true));
         fields.add(new GameBoard("Chance", 0, true, false));
-        fields.add(new GameBoard("Brøndby", 2, false, true));
+        fields.add(new GameBoard("Broendby", 2, false, true));
         fields.add(new GameBoard("Football club Copenhagen", 2, false, true));
         fields.add(new GameBoard("Christmas vacation", 0, false, false)); //Hjørnekort????
         fields.add(new GameBoard("Manchester United", 3, false, true));
@@ -222,7 +182,7 @@ public abstract class MonopolyGame {
         chanceCards.add(new ChanceCard("You score a hat trick and everyone gives you 1 money", 4));
         chanceCards.add(new ChanceCard("You get a reward for coming to all the trainings and receive 2 money", 5));
         chanceCards.add(new ChanceCard("Advance to Frankfurt", 6)); // move to specific place on the board (dont know where yet)
-        chanceCards.add(new ChanceCard("Advance to Chealsea", 7)); // move to specific place on the board (dont know where yet)
+        chanceCards.add(new ChanceCard("Advance to Chelsea", 7)); // move to specific place on the board (dont know where yet)
         chanceCards.add(new ChanceCard("Your fans hate you and smash your car. You must pay 1 money to repair it", 8));
         chanceCards.add(new ChanceCard("You renovate a grandstand at your stadium and must pay 2", 9));
         chanceCards.add(new ChanceCard("Your clubhouse is assessed at a higher value than before. Pay 1 in property tax", 10));
@@ -230,9 +190,9 @@ public abstract class MonopolyGame {
         chanceCards.add(new ChanceCard("You go on a skiing holiday, even though you are not allowed according to your contract, and get injured. Pay 1 to the manager", 12));
         chanceCards.add(new ChanceCard("You eat too much McDonald's during the summer holidays and are not ready to fight. Pay 1 to the manager", 13));
         chanceCards.add(new ChanceCard("You have played well in the youth team and will make your debut in the first team. Receive 2", 14));
-        chanceCards.add(new ChanceCard("Both your parents are kidnapped by terrorists. Pay 2 in ransom.", 15));
+        
 
-        char[] gameBoard = createBoard(fields);
+        
 
         int turn = 1;
         while (true) {
@@ -256,7 +216,7 @@ public abstract class MonopolyGame {
                 GameBoard currentField = fields.get(player.position);
                 System.out.println("Landed on: " + currentField.name);
 
-                System.out.println(Arrays.toString(gameBoard));
+                
 
 
                 if (currentField.isChanceCard) {
@@ -266,16 +226,6 @@ public abstract class MonopolyGame {
                     applyChanceCardEffect(drawnCard, player, Playere, fields);
                 } else {
                 currentField.purchase(player);
-                }
-                
-
-                for (int i = 0 ; i < numOfPlayers ; i++){
-                    if (mover(gameBoard)){
-                        // Det kan være det er her vi kan skrive noget kode som bevæger X'et ud fra player position?
-                        // Hvis man fjerner det her snippet så rykker X'et ikke
-                    } else {
-                        System.out.println("Place occupied");
-                    }
                 }
 
                 // Check if the game should end
@@ -339,9 +289,8 @@ public abstract class MonopolyGame {
                     case 14:
                         currentPlayer.addMoney(2); // Receive 2 for playing well in the youth team
                         break;
-                    case 15:
-                        currentPlayer.subtractMoney(2); // Pay 2 ransom for kidnapped parents
-                        break;
+                    
+
         }
     }
     
