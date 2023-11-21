@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Arrays;
 
+
 abstract class Square {
     String name;
 
@@ -32,8 +33,6 @@ class Player extends Square {
     public void subtractMoney(int cost) {
         money -= cost;
     }
-
-
    
 }
 
