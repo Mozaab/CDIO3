@@ -60,7 +60,7 @@ class GameBoard extends Square {
             Scanner scanner = new Scanner(System.in);
             // Field is not owned, player can purchase
             System.out.println("Cost to buy: $" + cost);
-            System.out.print("Do you want to buy? Press y to purchase. If not, press anything else: ");
+            System.out.print("Do you want to buy? Press y and then enter to purchase. If not, press any other letter and enter: ");
             
             
 
@@ -137,19 +137,20 @@ public abstract class MonopolyGame {
         }
 
         scanner.nextLine();
-        System.out.println("Welcome to Monopoly Jr. We will make a quick introduction on how the game works, and how you play it. ");
-        System.out.println("There are 24 fields in the gameboard and 4 of them are chancecards. There are 15 different chancecards which will randomly be chosen. It can either be a good thing or a bad thing :) ");
-        System.out.println("When its your turn, you roll with the dice and land on the field that the value of your diceroll is. You get a description on how much the field cost and if you want to buy the field you simply press 'y' and if you don't want to buy the field you press any other character on your keyboard. ");
-        System.out.println("It is not possible to sell a field you bought. So choose carefully what field you want to buy :) ");
-        System.out.println("If you have bought a field then if any other player accidently land on that field, they have to pay the same amount you bought the field for as a rent.");
-        System.out.println("The game ends when one of you don't have any more money.");
+        System.out.println("Welcome to Monopoly Jr. We will make a quick introduction on how the game works, and how you play it.");
+        System.out.println("There are 24 fields in the gameboard and 4 of them are chancecards. There are 15 different chancecards which will randomly be chosen. It can either be a good thing or a bad thing :)");
+        System.out.println("When its your turn, you roll with the dice and land on the field that the value of your diceroll is. "); 
+        System.out.println("You get a description on how much the field cost and if you want to buy the field you simply press 'y' and then enter. If you don't want to buy the field you press any other character on your keyboard and then enter."); 
+        System.out.println("It is not possible to sell a field you bought. So choose carefully what field you want to buy :)");
+        System.out.println("If you have bought a field and any other player accidentally land on that field, they have to pay the same amount you bought the field for as a rent.");
+        System.out.println("The game ends when one of you don't have any more money or when one of you reach 50 money.");
         System.out.println("Enjoy the game! :)");
         scanner.nextLine();
 
         // Initialize GameBoards
         ArrayList<GameBoard> fields = new ArrayList<>();
         fields.add(new GameBoard("Start", 0, false, false)); 
-        fields.add(new GameBoard("Odense football club", 1, false, true)); // Adjust costs as needed
+        fields.add(new GameBoard("Odense football club", 1, false, true)); 
         fields.add(new GameBoard("Aarhus football club", 1, false, true));
         fields.add(new GameBoard("Chance", 0, true, false));
         fields.add(new GameBoard("Toulouse", 1, false, true));
@@ -176,20 +177,20 @@ public abstract class MonopolyGame {
     
 
         ArrayList<ChanceCard> chanceCards = new ArrayList<>();
-        chanceCards.add(new ChanceCard("Advance to the start and earn your money: DKK 2", 1));
+        chanceCards.add(new ChanceCard("Advance to the start and earn your money: 2 money", 1));
         chanceCards.add(new ChanceCard("Advance 5 spaces!", 2));
-        chanceCards.add(new ChanceCard("You are late for training pay 2 to the manager", 3));
+        chanceCards.add(new ChanceCard("You are late for training pay 2 money to the manager", 3));
         chanceCards.add(new ChanceCard("You score a hat trick and everyone gives you 1 money", 4));
         chanceCards.add(new ChanceCard("You get a reward for coming to all the trainings and receive 2 money", 5));
         chanceCards.add(new ChanceCard("Advance to Frankfurt", 6)); // move to specific place on the board (dont know where yet)
         chanceCards.add(new ChanceCard("Advance to Chelsea", 7)); // move to specific place on the board (dont know where yet)
         chanceCards.add(new ChanceCard("Your fans hate you and smash your car. You must pay 1 money to repair it", 8));
-        chanceCards.add(new ChanceCard("You renovate a grandstand at your stadium and must pay 2", 9));
-        chanceCards.add(new ChanceCard("Your clubhouse is assessed at a higher value than before. Pay 1 in property tax", 10));
-        chanceCards.add(new ChanceCard("An oil sheik from Saudi Arabia will sponsor your team. Receive 3", 11));
-        chanceCards.add(new ChanceCard("You go on a skiing holiday, even though you are not allowed according to your contract, and get injured. Pay 1 to the manager", 12));
-        chanceCards.add(new ChanceCard("You eat too much McDonald's during the summer holidays and are not ready to fight. Pay 1 to the manager", 13));
-        chanceCards.add(new ChanceCard("You have played well in the youth team and will make your debut in the first team. Receive 2", 14));
+        chanceCards.add(new ChanceCard("You renovate a grandstand at your stadium and must pay 2 money", 9));
+        chanceCards.add(new ChanceCard("Your clubhouse is assessed at a higher value than before. Pay 1 money in property tax", 10));
+        chanceCards.add(new ChanceCard("An oil sheik from Saudi Arabia will sponsor your team. Receive 6 money", 11));
+        chanceCards.add(new ChanceCard("You go on a skiing holiday, even though you are not allowed according to your contract, and get injured. Pay 1 money to the manager", 12));
+        chanceCards.add(new ChanceCard("You eat too much McDonald's during the summer holidays and are not ready to fight. Pay 1 money to the manager", 13));
+        chanceCards.add(new ChanceCard("You have played well in the youth team and will make your debut in the first team. Receive 2 money", 14));
         
 
         
@@ -229,8 +230,13 @@ public abstract class MonopolyGame {
                 }
 
                 // Check if the game should end
-                if (player.money <= 0 || player.money >= 50) {
-                    System.out.println(player.name + " has reached the end condition. Game over!");
+                if (player.money <= 0) {
+                    System.out.println(player.name + " you have no more money to play this game any further... You have unfortunately lost the game... :-(");
+                    System.out.print("Congratulations to you other players!");
+                    System.exit(0);
+                } else if (player.money >= 50){
+                    System.out.println(player.name + " you reached the maximum amount of money! :-o You just won the game!!");
+                    System.out.println("Big congratulations!");
                     System.exit(0);
                 }
             }
@@ -278,7 +284,7 @@ public abstract class MonopolyGame {
                         currentPlayer.subtractMoney(1); // Pay 1 in property tax
                         break;
                     case 11:
-                        currentPlayer.addMoney(3); // Receive 3 from an oil sheik sponsor
+                        currentPlayer.addMoney(6); // Receive 3 from an oil sheik sponsor
                         break;
                     case 12:
                         currentPlayer.subtractMoney(1); // Pay 1 for ski holiday injury
