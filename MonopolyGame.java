@@ -135,7 +135,7 @@ public abstract class MonopolyGame {
             String navn = scanner.nextLine();
             Playere[i] = new Player(navn, 20);
         }
-
+        // System.out.print("Press enter to continue");
         scanner.nextLine();
         System.out.println("Welcome to Monopoly Jr. We will make a quick introduction on how the game works, and how you play it.");
         System.out.println("There are 24 fields in the gameboard and 4 of them are chancecards. There are 15 different chancecards which will randomly be chosen. It can either be a good thing or a bad thing :)");
@@ -145,6 +145,8 @@ public abstract class MonopolyGame {
         System.out.println("If you have bought a field and any other player accidentally land on that field, they have to pay the same amount you bought the field for as a rent.");
         System.out.println("The game ends when one of you don't have any more money or when one of you reach 50 money.");
         System.out.println("Enjoy the game! :)");
+
+        System.out.println("Press enter to continue");
         scanner.nextLine();
 
         // Initialize GameBoards
@@ -201,6 +203,7 @@ public abstract class MonopolyGame {
 
             for (Player player : Playere) {
                 System.out.println("\n" + player.name + "'s turn");
+                System.out.println("Press enter to roll the dice");
                 scanner.nextLine();
                 System.out.println("Current position: " + player.position);
                 System.out.println("Money: $" + player.money);
@@ -232,7 +235,7 @@ public abstract class MonopolyGame {
                 // Check if the game should end
                 if (player.money <= 0) {
                     System.out.println(player.name + " you have no more money to play this game any further... You have unfortunately lost the game... :-(");
-                    System.out.print("Congratulations to you other players!");
+                    System.out.println("Congratulations to you other players!");
                     System.exit(0);
                 } else if (player.money >= 50){
                     System.out.println(player.name + " you reached the maximum amount of money! :-o You just won the game!!");
