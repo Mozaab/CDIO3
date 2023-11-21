@@ -145,8 +145,7 @@ public abstract class MonopolyGame {
         System.out.println("If you have bought a field and any other player accidentally land on that field, they have to pay the same amount you bought the field for as a rent.");
         System.out.println("The game ends when one of you don't have any more money or when one of you reach 50 money.");
         System.out.println("Enjoy the game! :)");
-
-        System.out.println("Press enter to continue");
+        System.out.println("\n" + "Press enter to continue");
         scanner.nextLine();
 
         // Initialize GameBoards
@@ -182,7 +181,7 @@ public abstract class MonopolyGame {
         chanceCards.add(new ChanceCard("Advance to the start and earn your money: 2 money", 1));
         chanceCards.add(new ChanceCard("Advance 5 spaces!", 2));
         chanceCards.add(new ChanceCard("You are late for training pay 2 money to the manager", 3));
-        chanceCards.add(new ChanceCard("You score a hat trick and everyone gives you 1 money", 4));
+        chanceCards.add(new ChanceCard("You score a hat trick and the other players give you 3 money each", 4));
         chanceCards.add(new ChanceCard("You get a reward for coming to all the trainings and receive 2 money", 5));
         chanceCards.add(new ChanceCard("Advance to Frankfurt", 6)); // move to specific place on the board (dont know where yet)
         chanceCards.add(new ChanceCard("Advance to Chelsea", 7)); // move to specific place on the board (dont know where yet)
@@ -203,7 +202,7 @@ public abstract class MonopolyGame {
 
             for (Player player : Playere) {
                 System.out.println("\n" + player.name + "'s turn");
-                System.out.println("Press enter to roll the dice");
+                System.out.println("\n" + "Press enter to roll the dice");
                 scanner.nextLine();
                 System.out.println("Current position: " + player.position);
                 System.out.println("Money: $" + player.money);
@@ -219,7 +218,7 @@ public abstract class MonopolyGame {
                 // Process field
                 GameBoard currentField = fields.get(player.position);
                 System.out.println("Landed on: " + currentField.name);
-
+                // scanner.nextLine(); maybe?
                 
 
 
@@ -231,7 +230,7 @@ public abstract class MonopolyGame {
                 } else {
                 currentField.purchase(player);
                 }
-
+                scanner.nextLine();
                 // Check if the game should end
                 if (player.money <= 0) {
                     System.out.println(player.name + " you have no more money to play this game any further... You have unfortunately lost the game... :-(");
@@ -262,8 +261,8 @@ public abstract class MonopolyGame {
                     case 4:
                         for (Player player : allPlayers) {
                             if (player != currentPlayer) {
-                                player.subtractMoney(1); // Each player gives 1 money
-                                currentPlayer.addMoney(1); // Current player receives the money
+                                player.subtractMoney(3); // Each player gives 1 money
+                                currentPlayer.addMoney(3); // Current player receives the money
                             }
                         }
                         break;
