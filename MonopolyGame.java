@@ -71,8 +71,10 @@ class GameBoard extends Square {
                     player.subtractMoney(cost);
                     owner = player; // Set the owner of the field
                     System.out.println("Field purchased!");
+                    System.out.println("\n"+ "Press enter to continue");
                 } else {
                     System.out.println("Not enough money to buy the field.");
+                    System.out.println("\n"+ "Press enter to continue");
                 }
             }
         } else if (player == owner) {
