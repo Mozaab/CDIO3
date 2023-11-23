@@ -54,13 +54,14 @@ class GameBoard extends Square {
     public void purchase(Player player) {
                 if (!isPurchasable) {
             System.out.println("You decide to take a deserved vacation :)");
+            System.out.println("\n" + "Press enter to continue");
             return;
         }
         if (owner == null) {
             Scanner scanner = new Scanner(System.in);
             // Field is not owned, player can purchase
             System.out.println("Cost to buy: $" + cost);
-            System.out.print("Do you want to buy? Press y and then enter to purchase. If not, press any other letter and enter: ");
+            System.out.print("Do you want to buy? Press 'y' and then enter to purchase. If not, press 'n' and enter: ");
             
             
 
@@ -70,12 +71,19 @@ class GameBoard extends Square {
                 if (player.money >= cost) {
                     player.subtractMoney(cost);
                     owner = player; // Set the owner of the field
-                    System.out.println("Field purchased!");
+                    System.out.println("\n"+ "Field purchased!");
                     System.out.println("\n"+ "Press enter to continue");
                 } else {
                     System.out.println("Not enough money to buy the field.");
                     System.out.println("\n"+ "Press enter to continue");
                 }
+            }
+
+
+            if (input.equalsIgnoreCase("n")){
+                System.out.println("\n"+ "Field not purchased!");
+                System.out.println("\n" + "Press enter to continue");
+                scanner.nextLine();
             }
         } else if (player == owner) {
             // Field is already owned, player needs to pay rent
@@ -137,7 +145,7 @@ public abstract class MonopolyGame {
             String navn = scanner.nextLine();
             Playere[i] = new Player(navn, 20);
         }
-        // System.out.print("Press enter to continue");
+        System.out.println("\n"+ "Press enter to continue");
         scanner.nextLine();
         System.out.println("Welcome to Monopoly Jr. We will make a quick introduction on how the game works, and how you play it.");
         System.out.println("There are 24 fields in the gameboard and 4 of them are chancecards. There are 15 different chancecards which will randomly be chosen. It can either be a good thing or a bad thing :)");
@@ -229,6 +237,7 @@ public abstract class MonopolyGame {
                     ChanceCard drawnCard = chanceCards.get(CardIndex);
                     System.out.println("Chance card: " + drawnCard.description);
                     applyChanceCardEffect(drawnCard, player, Playere, fields);
+                    System.out.println("\n" + "Press enter to continue");
                 } else {
                 currentField.purchase(player);
                 }
