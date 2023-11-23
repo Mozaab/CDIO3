@@ -7,24 +7,20 @@ public class PlayerTest {
 
     @Test
     public void testCanYouAddMoney() {
-        // Arrange
+
         Player p = new Player("playertest", 100);
 
-        // Act
         p.addMoney(50);
-
-        // Assert
+      
         assertEquals(150, p.money);
     }
     @Test
     public void testCanYouSubtractMoney() {
-        // Arrange
+
         Player p = new Player("playertest", 100);
 
-        // Act
         p.subtractMoney(50);
 
-        // Assert
         assertEquals(50, p.money);
     }
     @Test
@@ -51,6 +47,6 @@ public class PlayerTest {
             }
         }
 
-        assertEquals(0, Playere[0].position, "Player's position should be reset to 1 after reaching the end of the board.");
+        assertEquals(0, Playere[0].position, "Player's position should be reset to 0 after reaching the end of the board.");
     }
 }
