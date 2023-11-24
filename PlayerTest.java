@@ -48,6 +48,6 @@ public class PlayerTest {
             
         }
         
-        assertEquals(1, Playere[0].position, "Player's position should be reset to  after reaching the end of the board.");
+        assertEquals(1, Playere[0].position, "Player's position should be reset to 1 after reaching the end of the board.");
     }
 }
