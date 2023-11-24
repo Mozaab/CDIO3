@@ -90,6 +90,7 @@ class GameBoard extends Square {
             System.out.println("This field is owned by yourself. You can not buy this field");
             player.subtractMoney(cost);
             owner.addMoney(cost);
+            System.out.println("\n" + "Press enter to continue");
         } 
         
     
@@ -98,6 +99,7 @@ class GameBoard extends Square {
             System.out.println("This field is owned by " + owner.name + ". Paying rent: $" + cost);
             player.subtractMoney(cost);
             owner.addMoney(cost);
+            System.out.println("\n" + "Press enter to continue");
         }
         
     } 
@@ -143,7 +145,7 @@ public abstract class MonopolyGame {
         for (int i = 0; i < numOfPlayers; i++) {
             System.out.println("Enter the name of the player " + (i + 1) + ": ");
             String navn = scanner.nextLine();
-            Playere[i] = new Player(navn, 20);
+            Playere[i] = new Player(navn, 30); // players start money
         }
         System.out.println("\n"+ "Press enter to continue");
         scanner.nextLine();
@@ -153,6 +155,7 @@ public abstract class MonopolyGame {
         System.out.println("You get a description on how much the field cost and if you want to buy the field you simply press 'y' and then enter. If you don't want to buy the field you press any other character on your keyboard and then enter."); 
         System.out.println("It is not possible to sell a field you bought. So choose carefully what field you want to buy :)");
         System.out.println("If you have bought a field and any other player accidentally land on that field, they have to pay the same amount you bought the field for as a rent.");
+        System.out.println("Every player start with 20 money in the bank.");
         System.out.println("The game ends when one of you don't have any more money or when one of you reach 50 money.");
         System.out.println("Enjoy the game! :)");
         System.out.println("\n" + "Press enter to continue");
@@ -161,8 +164,8 @@ public abstract class MonopolyGame {
         // Initialize GameBoards
         ArrayList<GameBoard> fields = new ArrayList<>();
         fields.add(new GameBoard("Start", 0, false, false)); 
-        fields.add(new GameBoard("Odense football club", 1, false, true)); 
-        fields.add(new GameBoard("Aarhus football club", 1, false, true));
+        fields.add(new GameBoard("Odense Football Club", 1, false, true)); 
+        fields.add(new GameBoard("Aarhus Football Club", 1, false, true));
         fields.add(new GameBoard("Chance", 0, true, false));
         fields.add(new GameBoard("Toulouse", 1, false, true));
         fields.add(new GameBoard("Lyon", 1, false, true));
@@ -171,7 +174,7 @@ public abstract class MonopolyGame {
         fields.add(new GameBoard("Frankfurt", 2, false, true));
         fields.add(new GameBoard("Chance", 0, true, false));
         fields.add(new GameBoard("Broendby", 2, false, true));
-        fields.add(new GameBoard("Football club Copenhagen", 2, false, true));
+        fields.add(new GameBoard("Copenhagen Football Club", 2, false, true));
         fields.add(new GameBoard("Christmas vacation", 0, false, false)); //Hjørnekort????
         fields.add(new GameBoard("Manchester United", 3, false, true));
         fields.add(new GameBoard("Chelsea", 3, false, true));
@@ -199,9 +202,8 @@ public abstract class MonopolyGame {
         chanceCards.add(new ChanceCard("You renovate a grandstand at your stadium and must pay 2 money", 9));
         chanceCards.add(new ChanceCard("Your clubhouse is assessed at a higher value than before. Pay 1 money in property tax", 10));
         chanceCards.add(new ChanceCard("An oil sheik from Saudi Arabia will sponsor your team. Receive 6 money", 11));
-        chanceCards.add(new ChanceCard("You go on a skiing holiday, even though you are not allowed according to your contract, and get injured. Pay 1 money to the manager", 12));
-        chanceCards.add(new ChanceCard("You eat too much McDonald's during the summer holidays and are not ready to fight. Pay 1 money to the manager", 13));
-        chanceCards.add(new ChanceCard("You have played well in the youth team and will make your debut in the first team. Receive 2 money", 14));
+       
+        chanceCards.add(new ChanceCard("You have played well in the youth team and will make your debut in the first team. Receive 2 money", 12));
         
 
         
@@ -299,13 +301,8 @@ public abstract class MonopolyGame {
                     case 11:
                         currentPlayer.addMoney(6); // Receive 3 from an oil sheik sponsor
                         break;
+                    
                     case 12:
-                        currentPlayer.subtractMoney(1); // Pay 1 for ski holiday injury
-                        break;
-                    case 13:
-                        currentPlayer.subtractMoney(1); // Pay 1 for eating too much McDonald's
-                        break;
-                    case 14:
                         currentPlayer.addMoney(2); // Receive 2 for playing well in the youth team
                         break;
                     
