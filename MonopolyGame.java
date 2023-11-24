@@ -198,7 +198,7 @@ public abstract class MonopolyGame {
         chanceCards.add(new ChanceCard("You get a reward for coming to all the trainings and receive 2 money", 5));
         chanceCards.add(new ChanceCard("Advance to Frankfurt", 6)); // move to specific place on the board (dont know where yet)
         chanceCards.add(new ChanceCard("Advance to Chelsea", 7)); // move to specific place on the board (dont know where yet)
-        chanceCards.add(new ChanceCard("Your fans hate you and smash your car. You must pay 1 money to repair it", 8));
+        chanceCards.add(new ChanceCard("Your fans hate you and smash your car. You must pay 1n money to repair it", 8));
         chanceCards.add(new ChanceCard("You renovate a grandstand at your stadium and must pay 2 money", 9));
         chanceCards.add(new ChanceCard("Your clubhouse is assessed at a higher value than before. Pay 1 money in property tax", 10));
         chanceCards.add(new ChanceCard("An oil sheik from Saudi Arabia will sponsor your team. Receive 6 money", 11));
@@ -223,9 +223,14 @@ public abstract class MonopolyGame {
                 int diceRoll = (int) (Math.random() * 6) + 1;
                 System.out.println("Dice roll: " + diceRoll);
 
-                // Move player
+                // Move player og checke om de passere start
+                int oldposition = player.position;
                 player.position = (player.position + diceRoll) % fields.size();
 
+                if (player.position < oldposition){
+                    System.out.println("You passed 'Start'! Collect 2 money!");
+                    player.addMoney(2);
+                }
 
                 // Process field
                 GameBoard currentField = fields.get(player.position);
