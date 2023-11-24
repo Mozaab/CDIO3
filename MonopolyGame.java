@@ -145,7 +145,7 @@ public abstract class MonopolyGame {
         for (int i = 0; i < numOfPlayers; i++) {
             System.out.println("Enter the name of the player " + (i + 1) + ": ");
             String navn = scanner.nextLine();
-            Playere[i] = new Player(navn, 30); // players start money
+            Playere[i] = new Player(navn, 20); // players start money
         }
         System.out.println("\n"+ "Press enter to continue");
         scanner.nextLine();
