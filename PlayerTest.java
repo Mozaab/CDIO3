@@ -33,20 +33,21 @@ public class PlayerTest {
         fields.add(startSquare);
 
         int diceRoll = 5; 
-        Playere[0].position = fields.size() - diceRoll;
+        Playere[0].position = 0;
 
-        int turns = 2; 
+        int turns = 5; 
         for (int turn = 1; turn <= turns; turn++) {
             for (Player currentPlayer : Playere) {
-                int simulatedDiceRoll = (int) (Math.random() * 6) + 1;
-                currentPlayer.position = (currentPlayer.position + simulatedDiceRoll) % fields.size();
+
+                currentPlayer.position = (currentPlayer.position + diceRoll);
 
                 if (currentPlayer.position > 24) {
-                    currentPlayer.position = 0;
+                    currentPlayer.position = 1;
                 }
             }
+            
         }
-
-        assertEquals(0, Playere[0].position, "Player's position should be reset to 0 after reaching the end of the board.");
+        
+        assertEquals(1, Playere[0].position, "Player's position should be reset to  after reaching the end of the board.");
     }
 }
